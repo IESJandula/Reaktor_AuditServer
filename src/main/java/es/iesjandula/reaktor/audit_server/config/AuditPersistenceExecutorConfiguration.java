@@ -1,4 +1,4 @@
-package es.iesjandula.reaktor.audit.server.config;
+package es.iesjandula.reaktor.audit_server.config;
 
 import java.util.concurrent.ThreadPoolExecutor;
 

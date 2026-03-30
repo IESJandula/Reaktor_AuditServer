@@ -1,4 +1,4 @@
-package es.iesjandula.reaktor.audit.server;
+package es.iesjandula.reaktor.audit_server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

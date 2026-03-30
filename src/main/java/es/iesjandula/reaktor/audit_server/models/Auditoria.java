@@ -1,4 +1,4 @@
-package es.iesjandula.reaktor.audit.server.models;
+package es.iesjandula.reaktor.audit_server.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

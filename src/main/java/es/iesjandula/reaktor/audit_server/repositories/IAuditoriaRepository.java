@@ -1,8 +1,8 @@
-package es.iesjandula.reaktor.audit.server.repositories;
+package es.iesjandula.reaktor.audit_server.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import es.iesjandula.reaktor.audit.server.models.Auditoria;
+import es.iesjandula.reaktor.audit_server.models.Auditoria;
 
 /**
  * Interfaz que define el repositorio de auditorías

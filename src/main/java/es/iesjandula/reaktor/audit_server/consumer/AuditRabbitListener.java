@@ -1,4 +1,4 @@
-package es.iesjandula.reaktor.audit.server.consumer;
+package es.iesjandula.reaktor.audit_server.consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
-import es.iesjandula.reaktor.audit.server.config.AuditPersistenceExecutorConfiguration;
-import es.iesjandula.reaktor.audit.server.models.Auditoria;
-import es.iesjandula.reaktor.audit.server.repositories.IAuditoriaRepository;
+import es.iesjandula.reaktor.audit_server.config.AuditPersistenceExecutorConfiguration;
+import es.iesjandula.reaktor.audit_server.models.Auditoria;
+import es.iesjandula.reaktor.audit_server.repositories.IAuditoriaRepository;
 import es.iesjandula.reaktor.base.security.models.DtoAuditoria;
 
 /**
