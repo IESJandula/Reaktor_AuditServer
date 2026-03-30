@@ -27,55 +27,55 @@ public class Auditoria implements Serializable
 	private Long id;
 
 	/** Nombre del servicio que genera el evento */
-    @Column(name = "service_name", nullable = false)
+    @Column(name = "service_name")
 	private String serviceName;
 
 	/** Tipo de principal que genera el evento */
-    @Column(name = "tipo_evento_usuario_aplicacion", nullable = false)
+    @Column(name = "tipo_evento_usuario_aplicacion")
 	private String tipoEventoUsuarioAplicacion ;
 
 	/** Nombre de la aplicación que genera el evento */
-    @Column(name = "nombre_aplicacion", nullable = false)
+    @Column(name = "nombre_aplicacion")
 	private String nombreAplicacion;
 
 	/** Email del usuario que genera el evento */
-    @Column(name = "email_usuario", nullable = false)
+    @Column(name = "email_usuario")
 	private String emailUsuario;
 
 	/** Nombre del usuario que genera el evento */
-    @Column(name = "nombre_usuario", nullable = false)
+    @Column(name = "nombre_usuario")
 	private String nombreUsuario;
 
 	/** Apellidos del usuario que genera el evento */	
-    @Column(name = "apellidos_usuario", nullable = false)
+    @Column(name = "apellidos_usuario")
 	private String apellidosUsuario;
 
 	/** Roles del principal que genera el evento */
-    @Column(name = "roles", nullable = false)
+    @Column(name = "roles")
 	private String roles;
 
 	/** Método HTTP del evento */
-    @Column(name = "metodo", nullable = false)
+    @Column(name = "metodo")
 	private String metodo;
 
 	/** Endpoint del evento */
-    @Column(name = "endpoint", nullable = false)
+    @Column(name = "endpoint")
 	private String endpoint;
 
 	/** User agent del evento */
-    @Column(name = "user_agent", nullable = false)
+    @Column(name = "user_agent")
 	private String userAgent;
 
 	/** Timestamp del evento */
-    @Column(name = "timestamp", nullable = false)
+    @Column(name = "timestamp")
 	private LocalDateTime timestamp;
 
 	/** Estado HTTP del evento */
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
 	private int status;
 
 	/** Duración del evento en milisegundos */
-    @Column(name = "duration_ms", nullable = false)
+    @Column(name = "duration_ms")
 	private Long durationMs;
 
 	/**
