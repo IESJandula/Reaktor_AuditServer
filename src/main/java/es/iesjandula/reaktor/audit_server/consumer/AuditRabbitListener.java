@@ -54,6 +54,10 @@ public class AuditRabbitListener
 			Auditoria auditoria = new Auditoria(
 				dtoAuditoria.getServiceName(),
 				dtoAuditoria.getTipoEventoUsuarioAplicacion(),
+				dtoAuditoria.getNombreAplicacion(),
+				dtoAuditoria.getEmailUsuario(),
+				dtoAuditoria.getNombreUsuario(),
+				dtoAuditoria.getApellidosUsuario(),
 				dtoAuditoria.getRoles(),
 				dtoAuditoria.getMetodo(),
 				dtoAuditoria.getEndpoint(),
@@ -64,22 +68,17 @@ public class AuditRabbitListener
 		
 			// Guardo la auditoría en la base de datos
 			this.auditoriaRepository.saveAndFlush(auditoria);
-				
-			// Logueamos la auditoría
-			log.info(
-				"Evento recibido y almacenado:" +
-					" service="    + dtoAuditoria.getServiceName() + 
-					" metodo="     + dtoAuditoria.getMetodo() + 
-					" endpoint="   + dtoAuditoria.getEndpoint() + 
-					" status="     + dtoAuditoria.getStatus() + 
-					" durationMs=" + dtoAuditoria.getDurationMs() + 
-					" timestamp="  + dtoAuditoria.getTimestamp());
 		}
 		catch (Exception exception)
 		{
 			// Logueamos el error
 			log.warn("Error al recibir y/o almacenar el evento de auditoría:" +
 						" service="    + dtoAuditoria.getServiceName() + 
+						" tipoEventoUsuarioAplicacion=" + dtoAuditoria.getTipoEventoUsuarioAplicacion() + 
+						" nombreAplicacion=" + dtoAuditoria.getNombreAplicacion() + 
+						" emailUsuario=" + dtoAuditoria.getEmailUsuario() + 
+						" nombreUsuario=" + dtoAuditoria.getNombreUsuario() + 
+						" apellidosUsuario=" + dtoAuditoria.getApellidosUsuario() + 
 						" metodo="     + dtoAuditoria.getMetodo() + 
 						" endpoint="   + dtoAuditoria.getEndpoint() + 
 						" status="     + dtoAuditoria.getStatus() + 

@@ -34,6 +34,22 @@ public class Auditoria implements Serializable
     @Column(name = "tipo_evento_usuario_aplicacion", nullable = false)
 	private String tipoEventoUsuarioAplicacion ;
 
+	/** Nombre de la aplicación que genera el evento */
+    @Column(name = "nombre_aplicacion", nullable = false)
+	private String nombreAplicacion;
+
+	/** Email del usuario que genera el evento */
+    @Column(name = "email_usuario", nullable = false)
+	private String emailUsuario;
+
+	/** Nombre del usuario que genera el evento */
+    @Column(name = "nombre_usuario", nullable = false)
+	private String nombreUsuario;
+
+	/** Apellidos del usuario que genera el evento */	
+    @Column(name = "apellidos_usuario", nullable = false)
+	private String apellidosUsuario;
+
 	/** Roles del principal que genera el evento */
     @Column(name = "roles", nullable = false)
 	private String roles;
@@ -66,6 +82,10 @@ public class Auditoria implements Serializable
 	 * Constructor con parámetros
 	 * @param serviceName de la auditoría
 	 * @param tipoEventoUsuarioAplicacion de la auditoría
+	 * @param nombreAplicacion de la auditoría
+	 * @param emailUsuario de la auditoría
+	 * @param nombreUsuario de la auditoría
+	 * @param apellidosUsuario de la auditoría
 	 * @param roles de la auditoría
 	 * @param metodo de la auditoría
 	 * @param endpoint de la auditoría
@@ -74,11 +94,21 @@ public class Auditoria implements Serializable
 	 * @param status de la auditoría en formato int
 	 * @param durationMs de la auditoría en formato Long
 	 */
-	public Auditoria(String serviceName, String tipoEventoUsuarioAplicacion, List<String> roles, String metodo, String endpoint, String userAgent, LocalDateTime timestamp, int status, Long durationMs)
+	public Auditoria(String serviceName,      String tipoEventoUsuarioAplicacion, 
+				     String nombreAplicacion, String emailUsuario, 
+					 String nombreUsuario,    String apellidosUsuario, 
+					 List<String> roles,      String metodo, 
+					 String endpoint,         String userAgent, 
+					 LocalDateTime timestamp, int status, 
+					 Long durationMs)
 	{
         // Seteamos los atributos de la auditoría
 		this.serviceName                 = serviceName ;
 		this.tipoEventoUsuarioAplicacion = tipoEventoUsuarioAplicacion ;
+		this.nombreAplicacion            = nombreAplicacion ;
+		this.emailUsuario                = emailUsuario ;
+		this.nombreUsuario               = nombreUsuario ;
+		this.apellidosUsuario            = apellidosUsuario ;
 		this.metodo 			         = metodo ;
 		this.endpoint 			         = endpoint ;
 		this.userAgent 			         = userAgent ;
@@ -124,6 +154,78 @@ public class Auditoria implements Serializable
 	public void setTipoEventoUsuarioAplicacion(String tipoEventoUsuarioAplicacion)
 	{
 		this.tipoEventoUsuarioAplicacion = tipoEventoUsuarioAplicacion ;
+	}
+
+	/**
+	 * Obtiene el nombre de la aplicación que genera el evento
+	 * @return Nombre de la aplicación que genera el evento
+	 */
+	public String getNombreAplicacion()
+	{
+		return this.nombreAplicacion;
+	}
+
+	/**
+	 * Establece el nombre de la aplicación que genera el evento
+	 * @param nombreAplicacion Nombre de la aplicación que genera el evento
+	 */
+	public void setNombreAplicacion(String nombreAplicacion)
+	{
+		this.nombreAplicacion = nombreAplicacion;
+	}
+
+	/**
+	 * Obtiene el email del usuario que genera el evento
+	 * @return Email del usuario que genera el evento
+	 */
+	public String getEmailUsuario()
+	{
+		return this.emailUsuario;
+	}
+
+	/**
+	 * Establece el email del usuario que genera el evento
+	 * @param emailUsuario Email del usuario que genera el evento
+	 */
+	public void setEmailUsuario(String emailUsuario)
+	{
+		this.emailUsuario = emailUsuario;
+	}
+
+	/**
+	 * Obtiene el nombre del usuario que genera el evento
+	 * @return Nombre del usuario que genera el evento
+	 */
+	public String getNombreUsuario()
+	{
+		return this.nombreUsuario;
+	}
+
+	/**
+	 * Establece el nombre del usuario que genera el evento
+	 * @param nombreUsuario Nombre del usuario que genera el evento
+	 */
+	public void setNombreUsuario(String nombreUsuario)
+	{
+		this.nombreUsuario = nombreUsuario;
+	}
+
+	/**
+	 * Obtiene los apellidos del usuario que genera el evento
+	 * @return Apellidos del usuario que genera el evento
+	 */
+	public String getApellidosUsuario()
+	{
+		return this.apellidosUsuario;
+	}
+
+	/**
+	 * Establece los apellidos del usuario que genera el evento
+	 * @param apellidosUsuario Apellidos del usuario que genera el evento
+	 */
+	public void setApellidosUsuario(String apellidosUsuario)
+	{
+		this.apellidosUsuario = apellidosUsuario;
 	}
 
 	/**
