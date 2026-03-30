@@ -1,7 +1,7 @@
 spring:
   application:
     name: reaktor-audit-server
-  jpa.hibernate.ddl-auto: create
+  jpa.hibernate.ddl-auto: validate
   rabbitmq:
     host: localhost
     port: 5672
