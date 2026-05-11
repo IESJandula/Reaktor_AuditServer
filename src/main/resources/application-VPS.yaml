@@ -1,6 +1,6 @@
 spring:
   application:
-    name: reaktor-audit-server
+    name: audits
   jpa.hibernate.ddl-auto: validate
   rabbitmq:
     host: localhost
