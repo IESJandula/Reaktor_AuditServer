@@ -33,7 +33,7 @@ public class EstadisticasController
 	/**
 	 * Devuelve el número de peticiones agrupadas por día de la semana (lunes a viernes).
 	 */
-	@PreAuthorize("hasAnyRole('" + BaseConstants.ROLE_ADMINISTRADOR + "', '" + BaseConstants.ROLE_DIRECCION + "')")
+	@PreAuthorize("hasRole('" + BaseConstants.ROLE_PROFESOR + "')")
 	@GetMapping("/por-dia-semana")
 	public ResponseEntity<?> obtenerPeticionesPorDiaSemana()
 	{
@@ -89,7 +89,7 @@ public class EstadisticasController
 	 * Devuelve el número de peticiones agrupadas por tramo horario.
 	 * Los tramos con un porcentaje igual o inferior al umbral se agrupan en "Otros".
 	 */
-	@PreAuthorize("hasAnyRole('" + BaseConstants.ROLE_ADMINISTRADOR + "', '" + BaseConstants.ROLE_DIRECCION + "')")
+	@PreAuthorize("hasRole('" + BaseConstants.ROLE_PROFESOR + "')")
 	@GetMapping("/por-tramo-horario")
 	public ResponseEntity<?> obtenerPeticionesPorTramoHorario()
 	{
@@ -164,7 +164,7 @@ public class EstadisticasController
 	 * (primer segmento del path del endpoint).
 	 * Las peticiones al microservicio Audit se excluyen.
 	 */
-	@PreAuthorize("hasAnyRole('" + BaseConstants.ROLE_ADMINISTRADOR + "', '" + BaseConstants.ROLE_DIRECCION + "')")
+	@PreAuthorize("hasRole('" + BaseConstants.ROLE_PROFESOR + "')")
 	@GetMapping("/por-microservicio")
 	public ResponseEntity<?> obtenerPeticionesPorMicroservicio()
 	{
