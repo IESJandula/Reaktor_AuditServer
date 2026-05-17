@@ -18,6 +18,7 @@ import es.iesjandula.reaktor.audit_server.dto.EstadisticaDiaSemanaDto;
 import es.iesjandula.reaktor.audit_server.dto.EstadisticaMicroservicioDto;
 import es.iesjandula.reaktor.audit_server.dto.EstadisticaTramoHorarioDto;
 import es.iesjandula.reaktor.audit_server.repositories.IAuditoriaRepository;
+import es.iesjandula.reaktor.audit_server.utils.Constants;
 import es.iesjandula.reaktor.base.utils.BaseConstants;
 
 @RequestMapping("/audit/estadisticas")
@@ -43,13 +44,13 @@ public class EstadisticasController
 			// Obtenemos los datos agrupados por día de la semana
 			List<Object[]> resultados = this.auditoriaRepository.contarPorDiaSemana() ;
 
-			// Inicializamos el mapa con los 5 días lectivos
+			// Inicializamos el mapa con los 5 días lectivos en orden
 			Map<String, Long> mapaDias = new HashMap<>() ;
-			mapaDias.put("Lunes", 0L) ;
-			mapaDias.put("Martes", 0L) ;
-			mapaDias.put("Miércoles", 0L) ;
-			mapaDias.put("Jueves", 0L) ;
-			mapaDias.put("Viernes", 0L) ;
+			mapaDias.put(Constants.DIA_LUNES,     0L) ;
+			mapaDias.put(Constants.DIA_MARTES,    0L) ;
+			mapaDias.put(Constants.DIA_MIERCOLES, 0L) ;
+			mapaDias.put(Constants.DIA_JUEVES,    0L) ;
+			mapaDias.put(Constants.DIA_VIERNES,   0L) ;
 
 			// Recorremos los resultados
 			for (Object[] fila : resultados)
@@ -58,7 +59,6 @@ public class EstadisticasController
 				Long totalPeticiones = ((Number) fila[1]).longValue() ;
 
 				// Convertimos el número de día de base de datos al nombre del día
-				// 1=domingo, 2=lunes, 3=martes, 4=miércoles, 5=jueves, 6=viernes, 7=sábado
 				String nombreDia = this.convertirDiaSemana(diaSemana) ;
 
 				// Solo añadimos los días lectivos (lunes a viernes)
@@ -70,25 +70,24 @@ public class EstadisticasController
 
 			// Convertimos el mapa a una lista de DTOs en orden lunes-viernes
 			List<EstadisticaDiaSemanaDto> listaResultados = new ArrayList<>() ;
-			listaResultados.add(new EstadisticaDiaSemanaDto("Lunes",     mapaDias.get("Lunes"))) ;
-			listaResultados.add(new EstadisticaDiaSemanaDto("Martes",    mapaDias.get("Martes"))) ;
-			listaResultados.add(new EstadisticaDiaSemanaDto("Miércoles", mapaDias.get("Miércoles"))) ;
-			listaResultados.add(new EstadisticaDiaSemanaDto("Jueves",    mapaDias.get("Jueves"))) ;
-			listaResultados.add(new EstadisticaDiaSemanaDto("Viernes",   mapaDias.get("Viernes"))) ;
+			listaResultados.add(new EstadisticaDiaSemanaDto(Constants.DIA_LUNES,     mapaDias.get(Constants.DIA_LUNES))) ;
+			listaResultados.add(new EstadisticaDiaSemanaDto(Constants.DIA_MARTES,    mapaDias.get(Constants.DIA_MARTES))) ;
+			listaResultados.add(new EstadisticaDiaSemanaDto(Constants.DIA_MIERCOLES, mapaDias.get(Constants.DIA_MIERCOLES))) ;
+			listaResultados.add(new EstadisticaDiaSemanaDto(Constants.DIA_JUEVES,    mapaDias.get(Constants.DIA_JUEVES))) ;
+			listaResultados.add(new EstadisticaDiaSemanaDto(Constants.DIA_VIERNES,   mapaDias.get(Constants.DIA_VIERNES))) ;
 
 			return ResponseEntity.ok(listaResultados) ;
 		}
 		catch (Exception exception)
 		{
-			String mensajeError = "Error inesperado al obtener estadísticas de auditoría por día de la semana" ;
-			log.error(mensajeError, exception) ;
-			return ResponseEntity.status(500).body(mensajeError) ;
+			log.error(Constants.ERR_ESTADISTICAS_DIA_SEMANA_MESSAGE, exception) ;
+			return ResponseEntity.status(500).body(Constants.ERR_ESTADISTICAS_DIA_SEMANA_MESSAGE) ;
 		}
 	}
 
 	/**
 	 * Devuelve el número de peticiones agrupadas por tramo horario.
-	 * Los tramos con menos del 5% de peticiones se agrupan en "Otros".
+	 * Los tramos con un porcentaje igual o inferior al umbral se agrupan en "Otros".
 	 */
 	@PreAuthorize("hasAnyRole('" + BaseConstants.ROLE_ADMINISTRADOR + "', '" + BaseConstants.ROLE_DIRECCION + "')")
 	@GetMapping("/por-tramo-horario")
@@ -117,13 +116,13 @@ public class EstadisticasController
 				totalPeticiones += total ;
 			}
 
-			// Devolvemos lista vacía si no hay peticiones
+			// Si no hay peticiones, devolvemos lista vacía
 			if (totalPeticiones == 0)
 			{
 				return ResponseEntity.ok(new ArrayList<EstadisticaTramoHorarioDto>()) ;
 			}
 
-			// Separamos los tramos con más del 5% del resto
+			// Separamos los tramos con porcentaje superior al umbral del resto (se irán a "Otros")
 			List<EstadisticaTramoHorarioDto> listaResultados = new ArrayList<>() ;
 			long totalOtros = 0L ;
 
@@ -132,7 +131,7 @@ public class EstadisticasController
 				Long total = mapaTramos.get(tramo) ;
 				double porcentaje = (total * 100.0) / totalPeticiones ;
 
-				if (porcentaje > 5.0)
+				if (porcentaje > Constants.UMBRAL_PORCENTAJE_TRAMO_OTROS)
 				{
 					listaResultados.add(new EstadisticaTramoHorarioDto(tramo, total)) ;
 				}
@@ -148,33 +147,15 @@ public class EstadisticasController
 			// Añadimos al final la categoría "Otros" si tiene peticiones
 			if (totalOtros > 0)
 			{
-				listaResultados.add(new EstadisticaTramoHorarioDto("Otros", totalOtros)) ;
+				listaResultados.add(new EstadisticaTramoHorarioDto(Constants.TRAMO_HORARIO_OTROS, totalOtros)) ;
 			}
 
 			return ResponseEntity.ok(listaResultados) ;
 		}
 		catch (Exception exception)
 		{
-			String mensajeError = "Error inesperado al obtener estadísticas de auditoría por tramo horario" ;
-			log.error(mensajeError, exception) ;
-			return ResponseEntity.status(500).body(mensajeError) ;
-		}
-	}
-
-	/**
-	 * Convierte el número de día de la semana de base de datos al nombre del día.
-	 * Solo devuelve los días lectivos. Devuelve null para sábado y domingo.
-	 */
-	private String convertirDiaSemana(int diaSemana)
-	{
-		switch (diaSemana)
-		{
-			case 2:  return "Lunes" ;
-			case 3:  return "Martes" ;
-			case 4:  return "Miércoles" ;
-			case 5:  return "Jueves" ;
-			case 6:  return "Viernes" ;
-			default: return null ;
+			log.error(Constants.ERR_ESTADISTICAS_TRAMO_HORARIO_MESSAGE, exception) ;
+			return ResponseEntity.status(500).body(Constants.ERR_ESTADISTICAS_TRAMO_HORARIO_MESSAGE) ;
 		}
 	}
 
@@ -205,7 +186,7 @@ public class EstadisticasController
 				// Traducimos el primer segmento del path al nombre legible
 				String microservicio = this.traducirMicroservicio(endpoint) ;
 
-				// Si es null, significa que es Audit y lo excluimos
+				// Si es null, significa que es Audit u otro microservicio no contemplado: lo excluimos
 				if (microservicio != null)
 				{
 					Long totalActual = mapaMicroservicios.get(microservicio) ;
@@ -235,15 +216,35 @@ public class EstadisticasController
 		}
 		catch (Exception exception)
 		{
-			String mensajeError = "Error inesperado al obtener estadísticas de auditoría por microservicio" ;
-			log.error(mensajeError, exception) ;
-			return ResponseEntity.status(500).body(mensajeError) ;
+			log.error(Constants.ERR_ESTADISTICAS_MICROSERVICIO_MESSAGE, exception) ;
+			return ResponseEntity.status(500).body(Constants.ERR_ESTADISTICAS_MICROSERVICIO_MESSAGE) ;
 		}
 	}
 
 	/**
+	 * Convierte el número de día de la semana de base de datos al nombre del día.
+	 * Solo devuelve los días lectivos. Devuelve null para sábado y domingo.
+	 */
+	private String convertirDiaSemana(int diaSemana)
+	{
+		String resultado = null ;
+
+		switch (diaSemana)
+		{
+			case 2:  resultado = Constants.DIA_LUNES ;     break ;
+			case 3:  resultado = Constants.DIA_MARTES ;    break ;
+			case 4:  resultado = Constants.DIA_MIERCOLES ; break ;
+			case 5:  resultado = Constants.DIA_JUEVES ;    break ;
+			case 6:  resultado = Constants.DIA_VIERNES ;   break ;
+		}
+
+		return resultado ;
+	}
+
+	/**
 	 * Traduce el primer segmento del path al nombre legible del microservicio.
-	 * Devuelve null si la petición es del microservicio Audit. 
+	 * Devuelve null si la petición es del microservicio Audit u otro no contemplado,
+	 * lo que indica que debe ser excluida del cálculo. 
 	 */
 	private String traducirMicroservicio(String endpoint)
 	{
@@ -265,23 +266,43 @@ public class EstadisticasController
 			}
 
 			// Traducimos el primer segmento al nombre legible
-			if ("/printers".equals(primerSegmento))
+			if (Constants.PATH_PRINTERS.equals(primerSegmento))
 			{
-				resultado = "Impresión remota" ;
+				resultado = Constants.MICROSERVICIO_PRINTERS ;
 			}
-			else if ("/bookings".equals(primerSegmento))
+			else if (Constants.PATH_BOOKINGS.equals(primerSegmento))
 			{
-				resultado = "Reservas" ;
+				resultado = Constants.MICROSERVICIO_BOOKINGS ;
 			}
-			else if ("/issues".equals(primerSegmento))
+			else if (Constants.PATH_ISSUES.equals(primerSegmento))
 			{
-				resultado = "Incidencias" ;
+				resultado = Constants.MICROSERVICIO_ISSUES ;
 			}
-			else if ("/firebase".equals(primerSegmento))
+			else if (Constants.PATH_FIREBASE.equals(primerSegmento))
 			{
-				resultado = "Seguridad" ;
+				resultado = Constants.MICROSERVICIO_FIREBASE ;
 			}
-			// Si es /audit, dejamos resultado a null para excluirlo
+			else if (Constants.PATH_NOTIFICATIONS.equals(primerSegmento))
+			{
+				resultado = Constants.MICROSERVICIO_NOTIFICATIONS ;
+			}
+			else if (Constants.PATH_EVENTS.equals(primerSegmento))
+			{
+				resultado = Constants.MICROSERVICIO_EVENTS ;
+			}
+			else if (Constants.PATH_STRIKES.equals(primerSegmento))
+			{
+				resultado = Constants.MICROSERVICIO_STRIKES ;
+			}
+			else if (Constants.PATH_AUTOMATIONS.equals(primerSegmento))
+			{
+				resultado = Constants.MICROSERVICIO_AUTOMATIONS ;
+			}
+			else if (Constants.PATH_SCHOOL_MANAGER.equals(primerSegmento))
+			{
+				resultado = Constants.MICROSERVICIO_SCHOOL_MANAGER ;
+			}
+			// Si es /audit o cualquier otro, dejamos resultado a null para excluirlo
 		}
 
 		return resultado ;
