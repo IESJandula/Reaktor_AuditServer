@@ -265,44 +265,8 @@ public class EstadisticasController
 				primerSegmento = endpoint ;
 			}
 
-			// Traducimos el primer segmento al nombre legible
-			if (Constants.PATH_PRINTERS.equals(primerSegmento))
-			{
-				resultado = Constants.MICROSERVICIO_PRINTERS ;
-			}
-			else if (Constants.PATH_BOOKINGS.equals(primerSegmento))
-			{
-				resultado = Constants.MICROSERVICIO_BOOKINGS ;
-			}
-			else if (Constants.PATH_ISSUES.equals(primerSegmento))
-			{
-				resultado = Constants.MICROSERVICIO_ISSUES ;
-			}
-			else if (Constants.PATH_FIREBASE.equals(primerSegmento))
-			{
-				resultado = Constants.MICROSERVICIO_FIREBASE ;
-			}
-			else if (Constants.PATH_NOTIFICATIONS.equals(primerSegmento))
-			{
-				resultado = Constants.MICROSERVICIO_NOTIFICATIONS ;
-			}
-			else if (Constants.PATH_EVENTS.equals(primerSegmento))
-			{
-				resultado = Constants.MICROSERVICIO_EVENTS ;
-			}
-			else if (Constants.PATH_STRIKES.equals(primerSegmento))
-			{
-				resultado = Constants.MICROSERVICIO_STRIKES ;
-			}
-			else if (Constants.PATH_AUTOMATIONS.equals(primerSegmento))
-			{
-				resultado = Constants.MICROSERVICIO_AUTOMATIONS ;
-			}
-			else if (Constants.PATH_SCHOOL_MANAGER.equals(primerSegmento))
-			{
-				resultado = Constants.MICROSERVICIO_SCHOOL_MANAGER ;
-			}
 			// Si es /audit o cualquier otro, dejamos resultado a null para excluirlo
+			resultado = Constants.MICROSERVICIOS_MAP.get(primerSegmento) ;
 		}
 
 		return resultado ;

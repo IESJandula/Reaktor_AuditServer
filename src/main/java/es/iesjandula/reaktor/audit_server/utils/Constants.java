@@ -1,5 +1,8 @@
 package es.iesjandula.reaktor.audit_server.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Clase que contiene constantes utilizadas en el microservicio de auditoría.
  * <p>
@@ -72,57 +75,16 @@ public final class Constants
 	/********************* Microservicios ********************/
 	/*********************************************************/
 
-	/** Prefijo path - Impresión remota */
-	public static final String PATH_PRINTERS = "/printers" ;
-
-	/** Prefijo path - Reservas */
-	public static final String PATH_BOOKINGS = "/bookings" ;
-
-	/** Prefijo path - Incidencias */
-	public static final String PATH_ISSUES = "/issues" ;
-
-	/** Prefijo path - Seguridad */
-	public static final String PATH_FIREBASE = "/firebase" ;
-
-	/** Prefijo path - Notificaciones */
-	public static final String PATH_NOTIFICATIONS = "/notifications" ;
-
-	/** Prefijo path - Eventos */
-	public static final String PATH_EVENTS = "/events" ;
-
-	/** Prefijo path - Huelgas */
-	public static final String PATH_STRIKES = "/strikes" ;
-
-	/** Prefijo path - Domótica */
-	public static final String PATH_AUTOMATIONS = "/automations" ;
-
-	/** Prefijo path - Herramientas directivas */
-	public static final String PATH_SCHOOL_MANAGER = "/school_manager" ;
-
-	/** Nombre legible - Impresión remota */
-	public static final String MICROSERVICIO_PRINTERS = "Impresión remota" ;
-
-	/** Nombre legible - Reservas */
-	public static final String MICROSERVICIO_BOOKINGS = "Reservas" ;
-
-	/** Nombre legible - Incidencias */
-	public static final String MICROSERVICIO_ISSUES = "Incidencias" ;
-
-	/** Nombre legible - Seguridad */
-	public static final String MICROSERVICIO_FIREBASE = "Seguridad" ;
-
-	/** Nombre legible - Notificaciones */
-	public static final String MICROSERVICIO_NOTIFICATIONS = "Notificaciones" ;
-
-	/** Nombre legible - Eventos */
-	public static final String MICROSERVICIO_EVENTS = "Eventos" ;
-
-	/** Nombre legible - Huelgas */
-	public static final String MICROSERVICIO_STRIKES = "Huelgas" ;
-
-	/** Nombre legible - Domótica */
-	public static final String MICROSERVICIO_AUTOMATIONS = "Domótica" ;
-
-	/** Nombre legible - Herramientas directivas */
-	public static final String MICROSERVICIO_SCHOOL_MANAGER = "Herramientas directivas" ;
+    /** Mapa clave valor con los prefijos y nombres legibles de los microservicios */
+    public static final Map<String, String> MICROSERVICIOS_MAP = new HashMap<String, String>() {{
+        put("/printers", "Impresión remota");
+        put("/bookings", "Reservas");
+        put("/issues", "Incidencias");
+        put("/firebase", "Seguridad");
+        put("/notifications", "Notificaciones");
+        put("/events", "Eventos");
+        put("/strikes", "Huelgas");
+        put("/automations", "Domótica");
+        put("/school_manager", "Herramientas directivas");
+    }};
 }
