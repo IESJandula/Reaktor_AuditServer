@@ -69,7 +69,7 @@ public final class Constants
 	public static final String TRAMO_HORARIO_OTROS = "Otros" ;
 
 	/** Porcentaje umbral para agrupar tramos horarios en "Otros" */
-	public static final double UMBRAL_PORCENTAJE_TRAMO_OTROS = 5.0 ;
+	public static final double UMBRAL_PORCENTAJE_TRAMO_OTROS = 2.0 ;
 
 	/*********************************************************/
 	/********************* Microservicios ********************/
