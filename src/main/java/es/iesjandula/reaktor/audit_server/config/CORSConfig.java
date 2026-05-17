@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Esta clase habilita que el frontend pueda hacer llamadas al backend.
+ * Esta clase es la que habilita que una dirección IP remota pueda hacer llamadas al backend
  */
 @Configuration
 @EnableWebMvc
@@ -15,8 +15,8 @@ public class CORSConfig implements WebMvcConfigurer
 {
 	/** URL permitida de CORS */
 	@Value("${reaktor.urlCors}")
-	private String[] urlCors ;
-
+	private String[] urlCors;
+	
 	/**
 	 * @param registry información del Cors Registry
 	 */
