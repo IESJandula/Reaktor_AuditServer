@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.iesjandula.reaktor.base.utils.FechasUtils;
+
 import es.iesjandula.reaktor.audit_server.dto.EstadisticaDiaSemanaDto;
 import es.iesjandula.reaktor.audit_server.dto.EstadisticaMicroservicioDto;
 import es.iesjandula.reaktor.audit_server.dto.EstadisticaTramoHorarioDto;
