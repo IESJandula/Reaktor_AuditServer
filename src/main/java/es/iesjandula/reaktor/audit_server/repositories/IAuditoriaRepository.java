@@ -33,6 +33,6 @@ public interface IAuditoriaRepository extends JpaRepository<Auditoria, Long>
 	 * Cuenta las peticiones agrupadas por el primer segmento del endpoint.
 	 * Devuelve [endpoint, COUNT(*)]
 	 */
-	@Query("SELECT a.endpoint, COUNT(a) FROM Auditoria a WHERE a.curso_academico = :cursoAcademico GROUP BY a.endpoint")
+	@Query("SELECT a.endpoint, COUNT(a) FROM Auditoria a WHERE a.cursoAcademico = :cursoAcademico GROUP BY a.endpoint")
 	List<Object[]> contarPorEndpoint(@Param("cursoAcademico") String cursoAcademico) ;
 }
