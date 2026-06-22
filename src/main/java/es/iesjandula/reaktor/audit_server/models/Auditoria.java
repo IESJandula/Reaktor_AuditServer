@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import es.iesjandula.reaktor.base.utils.BaseConstants;
+import es.iesjandula.reaktor.base.utils.FechasUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +34,10 @@ public class Auditoria implements Serializable
 	/** Tipo de principal que genera el evento */
     @Column(name = "tipo_evento_usuario_aplicacion")
 	private String tipoEventoUsuarioAplicacion ;
+
+	/** Curso académico que genera el evento */
+    @Column(name = "curso_academico")
+	private String cursoAcademico;
 
 	/** Nombre de la aplicación que genera el evento */
     @Column(name = "nombre_aplicacion")
@@ -105,6 +110,7 @@ public class Auditoria implements Serializable
         // Seteamos los atributos de la auditoría
 		this.serviceName                 = serviceName ;
 		this.tipoEventoUsuarioAplicacion = tipoEventoUsuarioAplicacion ;
+		this.cursoAcademico              = FechasUtils.obtenerCursoAcademicoActual() ;
 		this.nombreAplicacion            = nombreAplicacion ;
 		this.emailUsuario                = emailUsuario ;
 		this.nombreUsuario               = nombreUsuario ;
@@ -154,6 +160,24 @@ public class Auditoria implements Serializable
 	public void setTipoEventoUsuarioAplicacion(String tipoEventoUsuarioAplicacion)
 	{
 		this.tipoEventoUsuarioAplicacion = tipoEventoUsuarioAplicacion ;
+	}
+
+	/**
+	 * Obtiene el curso académico que genera el evento
+	 * @return Curso académico que genera el evento
+	 */
+	public String getCursoAcademico()
+	{
+		return this.cursoAcademico;
+	}
+
+	/**
+	 * Establece el curso académico que genera el evento
+	 * @param cursoAcademico Curso académico que genera el evento
+	 */
+	public void setCursoAcademico(String cursoAcademico)
+	{
+		this.cursoAcademico = cursoAcademico;
 	}
 
 	/**
