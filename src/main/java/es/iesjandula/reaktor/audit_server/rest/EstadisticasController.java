@@ -41,8 +41,11 @@ public class EstadisticasController
 		{
 			log.info("Petición para obtener estadísticas de auditoría por día de la semana") ;
 
+			// Obtenemos el curso académico actual
+			String cursoAcademico = FechasUtils.obtenerCursoAcademicoActual() ;
+
 			// Obtenemos los datos agrupados por día de la semana
-			List<Object[]> resultados = this.auditoriaRepository.contarPorDiaSemana() ;
+			List<Object[]> resultados = this.auditoriaRepository.contarPorDiaSemana(cursoAcademico) ;
 
 			// Inicializamos el mapa con los 5 días lectivos en orden
 			Map<String, Long> mapaDias = new HashMap<>() ;
@@ -97,8 +100,11 @@ public class EstadisticasController
 		{
 			log.info("Petición para obtener estadísticas de auditoría por tramo horario") ;
 
+			// Obtenemos el curso académico actual
+			String cursoAcademico = FechasUtils.obtenerCursoAcademicoActual() ;
+
 			// Obtenemos los datos agrupados por hora
-			List<Object[]> resultados = this.auditoriaRepository.contarPorHora() ;
+			List<Object[]> resultados = this.auditoriaRepository.contarPorHora(cursoAcademico) ;
 
 			// Acumulamos los datos en un mapa por tramo horario
 			Map<String, Long> mapaTramos = new HashMap<>() ;
@@ -172,8 +178,11 @@ public class EstadisticasController
 		{
 			log.info("Petición para obtener estadísticas de auditoría por microservicio") ;
 
+			// Obtenemos el curso académico actual
+			String cursoAcademico = FechasUtils.obtenerCursoAcademicoActual() ;
+
 			// Obtenemos los datos agrupados por endpoint
-			List<Object[]> resultados = this.auditoriaRepository.contarPorEndpoint() ;
+			List<Object[]> resultados = this.auditoriaRepository.contarPorEndpoint(cursoAcademico) ;
 
 			// Acumulamos los datos en un mapa por microservicio
 			Map<String, Long> mapaMicroservicios = new HashMap<>() ;
